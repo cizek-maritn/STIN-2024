@@ -1,0 +1,1 @@
+cvičení ze STIN
