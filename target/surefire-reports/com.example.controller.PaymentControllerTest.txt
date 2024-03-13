@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: com.example.controller.PaymentControllerTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 16.22 s <<< FAILURE! -- in com.example.controller.PaymentControllerTest
+com.example.controller.PaymentControllerTest.testPayment -- Time elapsed: 4.534 s <<< ERROR!
+java.io.FileNotFoundException: class path resource [inputdata/input_valid.json] cannot be resolved to URL because it does not exist
+	at org.springframework.core.io.ClassPathResource.getURL(ClassPathResource.java:230)
+	at org.springframework.core.io.AbstractFileResolvingResource.getFile(AbstractFileResolvingResource.java:169)
+	at com.example.controller.PaymentControllerTest.testPayment(PaymentControllerTest.java:35)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
