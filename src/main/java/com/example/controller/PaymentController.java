@@ -1,8 +1,7 @@
 package com.example.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.model.Payment;
+import com.example.services.PaymentProcessingHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +11,11 @@ import java.util.Date;
 
 @RestController
 public class PaymentController {
+    private PaymentProcessingHandler paymentProcessingHandler;
+
+    public PaymentController(PaymentProcessingHandler paymentProcessingHandler){
+        this.paymentProcessingHandler = paymentProcessingHandler;
+    }
     @RequestMapping("/")
     public String hello() {
         return "Hello world";
@@ -23,21 +27,12 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public String paymentProcesing(String payload) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        
-        Payment payment = objectMapper.readValue(payload, Payment.class);
-        
-        String toPay = payment.getAmount() + "/" + payment.getCurrency();
-        
-        pay(toPay);
-        
-        return "test";
-    }
-
-    private void pay(String payment){
-        System.out.println(payment);
+    public String paymentProcessing(String payload) {
+        try {
+            paymentProcessingHandler.processPayment(payload);
+            return "Payment accepted";
+        } catch(JsonProcessingException jsonProcessingException){
+            return "Payment rejected";
+        }
     }
 }
-
-

@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +21,9 @@ public class PaymentControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    @Autowired
+    PaymentController paymentController;
+
     @Test
     void getHello() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
@@ -29,12 +31,13 @@ public class PaymentControllerTest {
                 .andExpect(content().string(equalTo("Hello world")));
     }
     @Test
-    void testPayment() throws IOException {
-        System.out.println(new ClassPathResource("").getFile().getAbsolutePath());
-        PaymentController paymentController = new PaymentController();
-        String payload = Files.readString(new ClassPathResource("inputdata/input_valid.json").getFile().toPath());
-        paymentController.paymentProcesing(payload);
-        Assertions.assertEquals(10, 10);
+    void testCardPayment() throws IOException {
+        String payload = Files.readString(new ClassPathResource("inputdata/card_valid_payment.json").getFile().toPath());
+        paymentController.paymentProcessing(payload);
+    }
+    @Test
+    void testCashPayment() throws IOException {
+        String payload = Files.readString(new ClassPathResource("inputdata/cash_valid_payment.json").getFile().toPath());
+        paymentController.paymentProcessing(payload);
     }
 }
-
